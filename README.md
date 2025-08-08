@@ -67,7 +67,7 @@ Uses a JavaScript-powered counter to generate a random number (customizable) and
 Is fully front-end (no server needed) and can run directly in any modern browser.
 
 # Screenshots  
-![1000053905.jpg](Starting Interface)
+!["C:\Users\parva\Downloads\1000053907.jpg.crdownload"](Starting Interface)
 The starting interface of the web app
 
 ![1000053906.jpg](Entering our name)
