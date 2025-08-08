@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Two Stage Drag & Drop Game</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+    .dropzone {
+        width: 300px;
+        height: 300px;
+        border: 2px dashed #ccc;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        margin: 20px auto;
+    }
+    .linezone {
+        width: 500px;
+        height: 150px;
+        border: 2px dashed #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        margin: 20px auto;
+    }
+    .draggable {
+        width: 80px;
+        height: 80px;
+        margin: 5px;
+        cursor: grab;
+    }
+    #timer {
+        font-size: 20px;
+        font-weight: bold;
+        margin: 10px;
+    }
+    video {
+        width: 80%;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<h1>Two Stage Drag & Drop Game</h1>
+<div id="timer">Time: 20</div>
+<div id="gameArea"></div>
+<video id="resultVideo" controls style="display:none;"></video>
+
+<script>
+let stage = 1;
+let timer;
+let timeLeft = 20;
+let objects = [];
+let dropzone, linezone;
+
+function startGame() {
+    document.getElementById("gameArea").innerHTML = "";
+    const gameArea = document.getElementById("gameArea");
+
+    if(stage === 1) {
+        // Stage 1: Create draggable items and one drop zone
+        const container = document.createElement("div");
+        for(let i = 1; i <= 5; i++) {
+            let img = document.createElement("img");
+            img.src = `https://via.placeholder.com/80?text=Obj${i}`;
+            img.id = `obj${i}`;
+            img.className = "draggable";
+            img.draggable = true;
+            img.addEventListener("dragstart", drag);
+            container.appendChild(img);
+            objects.push(img);
+        }
+        gameArea.appendChild(container);
+
+        dropzone = document.createElement("div");
+        dropzone.id = "dropzone";
+        dropzone.className = "dropzone";
+        dropzone.addEventListener("dragover", allowDrop);
+        dropzone.addEventListener("drop", dropStage1);
+        gameArea.appendChild(dropzone);
+
+    } else if(stage === 2) {
+        // Stage 2: Same drop zone now contains all objects at start
+        dropzone = document.createElement("div");
+        dropzone.id = "dropzone";
+        dropzone.className = "dropzone";
+        gameArea.appendChild(dropzone);
+
+        // Put all objects inside dropzone
+        objects.forEach(obj => {
+            obj.addEventListener("dragstart", drag);
+            dropzone.appendChild(obj);
+        });
+
+        // Create line zone for arranging items
+        linezone = document.createElement("div");
+        linezone.id = "linezone";
+        linezone.className = "linezone";
+        linezone.addEventListener("dragover", allowDrop);
+        linezone.addEventListener("drop", dropStage2);
+        gameArea.appendChild(linezone);
+    }
+
+    startTimer();
+}
+
+function startTimer() {
+    timeLeft = 20;
+    document.getElementById("timer").textContent = `Time: ${timeLeft}`;
+    timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById("timer").textContent = `Time: ${timeLeft}`;
+        if(timeLeft <= 0) {
+            clearInterval(timer);
+            failGame();
+        }
+    }, 1000);
+}
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function dropStage1(ev) {
+    ev.preventDefault();
+    let data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+    if(dropzone.children.length === 5) {
+        clearInterval(timer);
+        stage = 2;
+        startGame();
+    }
+}
+
+function dropStage2(ev) {
+    ev.preventDefault();
+    let data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+    if(linezone.children.length === 5) {
+        clearInterval(timer);
+        successGame();
+    }
+}
+
+function successGame() {
+    document.getElementById("gameArea").innerHTML = "";
+    const video = document.getElementById("resultVideo");
+    video.src = "success.mp4"; // Replace with actual success video
+    video.style.display = "block";
+    video.play();
+}
+
+function failGame() {
+    document.getElementById("gameArea").innerHTML = "";
+    const video = document.getElementById("resultVideo");
+    video.src = "fail.mp4"; // Replace with actual fail video
+    video.style.display = "block";
+    video.play();
+}
+
+startGame();
+</script>
+
+</body>
+</html>
