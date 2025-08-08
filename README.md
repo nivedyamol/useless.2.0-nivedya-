@@ -67,7 +67,7 @@ Uses a JavaScript-powered counter to generate a random number (customizable) and
 Is fully front-end (no server needed) and can run directly in any modern browser.
 
 # Screenshots  
-(Starting Interface)
+https://github.com/nivedyamol/useless.2.0-nivedya-/blob/main/Screenshot%202025-08-09%20051010.png?raw=true(Starting Interface)
 The starting interface of the web app
 
 [![1000053906.jpg]](https://github.com/nivedyamol/useless.2.0-nivedya-/blob/main/Screenshot%202025-08-09%20050930.png?raw=true)(Entering our name)
