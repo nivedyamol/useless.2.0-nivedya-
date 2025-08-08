@@ -2,25 +2,108 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rice Destiny 🍚</title>
   <style>
-    /* === Background Image === */
-    body {
+    body, html {
       margin: 0;
-      padding: 2rem;
-      font-family: 'Segoe UI', sans-serif;
-      background-image: url(' https://grandentree.in/wp-content/uploads/Onam-Sadhya-Moplahs.jpg'); /* 👈 Your biryani background */
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      color: white;
-      text-align: center;
+      padding: 0;
+      height: 100%;
+      font-family: sans-serif;
       overflow: hidden;
-      min-height: 100vh;
     }
 
-    /* === Falling Rice Animation === */
+    /* === COMMON STYLES === */
+    .page {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align:center ;
+      color: rgb(255, 255, 255);
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* === COVER PAGE === */
+    #cover {
+      background-image: url('https://static.vecteezy.com/system/resources/previews/037/349/469/non_2x/ai-generated-a-handful-of-long-grain-white-rice-spills-out-on-the-wooden-table-food-light-natural-colors-high-quality-ai-generative-photo.jpg');
+      z-index: 2;
+    }
+
+    #cover h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px black;
+    }
+
+    #cover p {
+      max-width: 600px;
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      text-shadow: 1px 1px 3px black;
+    }
+
+    #enterBtn {
+      padding: 0.8rem 1.5rem;
+      font-size: 1.2rem;
+      background: #ffcc00;
+      border: none;
+      cursor: pointer;
+      border-radius: 10px;
+      color: black;
+      font-weight: bold;
+    }
+
+    /* === MAIN PAGE === */
+    #main {
+      background-image: url(' https://grandentree.in/wp-content/uploads/Onam-Sadhya-Moplahs.jpg');
+      z-index: 1;
+      display: none;
+      flex-direction: column;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px black;
+    }
+
+    form {
+      margin-top: 1rem;
+    }
+
+    input {
+      padding: 0.5rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: none;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      margin-left: 0.5rem;
+      font-size: 1rem;
+      background: #ffcc00;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    #result {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      text-shadow: 1px 1px 3px black;
+    }
+
+    /* === RICE FALLING === */
     #rice-container {
       position: fixed;
       top: 0;
@@ -35,9 +118,9 @@
       position: absolute;
       width: 6px;
       height: 10px;
-      background: #fce9b1;
+      background: #d9c29c;
       border-radius: 2px;
-      animation: fall 5s linear infinite;
+      animation: fall linear infinite;
       opacity: 0.8;
     }
 
@@ -49,84 +132,70 @@
         transform: translateY(100vh);
       }
     }
-
-    h1 {
-      font-size: 1.7rem;
-      background-color: rgba(0, 0, 0, 0.5);
-      padding: 1rem;
-      border-radius: 10px;
-    }
-
-    form {
-      margin-top: 2rem;
-    }
-
-    input[type="text"] {
-      padding: 0.6rem;
-      font-size: 1rem;
-      border-radius: 5px;
-      border: none;
-      outline: none;
-    }
-
-    button {
-      padding: 0.6rem 1.2rem;
-      font-size: 1rem;
-      border-radius: 5px;
-      border: none;
-      background-color: #ffcc80;
-      color: #000;
-      cursor: pointer;
-      margin-left: 0.5rem;
-    }
-
-    #result {
-      margin-top: 1.5rem;
-      font-size: 1.3rem;
-      font-weight: bold;
-      background-color: rgba(255, 255, 255, 0.2);
-      padding: 1rem;
-      border-radius: 10px;
-    }
   </style>
 </head>
 <body>
 
-  <h1>🍽️ ഓരോ അരിയിലും അതു തിന്നേണ്ട ആളിന്റെ പേരുണ്ട് 🍚</h1>
+  <!-- COVER PAGE -->
+  <div id="cover" class="page">
+    <h1>🍚 Welcome to Rice Destiny 🍚</h1>
+    <p>Every grain of rice you will eat in your lifetime is already destined.  
+       Enter your name to find out your rice destiny and see how fate has planned your plate.</p>
+    <button id="enterBtn">Enter to Continue</button>
+  </div>
 
-  <div id="rice-container"></div>
+  <!-- MAIN PAGE -->
+  <div id="main" class="page">
+    <div id="rice-container"></div>
+    <h1>🍽️ ഓരോ അരിയിലും അത് തിന്നേണ്ട ആളിൻ്റെ പേരുണ്ട് 🍚</h1>
 
-  <form id="riceForm">
-    <input type="text" id="nameInput" placeholder="Enter your name" required />
-    <button type="submit">Find My Rice</button>
-  </form>
+    <form>
+      <input type="text" id="nameInput" placeholder="Enter your name" required />
+      <button type="submit">Find My Rice</button>
+    </form>
 
-  <div id="result"></div>
+    <div id="result"></div>
+  </div>
 
   <script>
+    const coverPage = document.getElementById("cover");
+    const mainPage = document.getElementById("main");
+    const enterBtn = document.getElementById("enterBtn");
+    const form = document.querySelector("form");
+    const resultDiv = document.getElementById("result");
+    const riceContainer = document.getElementById("rice-container");
+
+    // Switch to main page
+    enterBtn.addEventListener("click", () => {
+      coverPage.style.display = "none";
+      mainPage.style.display = "flex";
+      startRiceFalling();
+    });
+
     // Falling rice animation
     function createRice() {
-      const rice = document.createElement('div');
-      rice.className = 'rice';
-      rice.style.left = Math.random() * window.innerWidth + 'px';
-      rice.style.animationDuration = (Math.random() * 3 + 2) + 's';
-      document.getElementById('rice-container').appendChild(rice);
+      const rice = document.createElement("div");
+      rice.className = "rice";
+      rice.style.left = Math.random() * window.innerWidth + "px";
+      rice.style.animationDuration = (Math.random() *  3 + 2) + "s";
+      rice.style.background = "#d9c29c";
+      riceContainer.appendChild(rice);
       setTimeout(() => rice.remove(), 5000);
     }
 
-    setInterval(createRice, 100);
+    function startRiceFalling() {
+      setInterval(createRice, 100);
+    }
 
-    // Rice destiny logic
-    document.getElementById("riceForm").addEventListener("submit", function(e) {
+    // Form submission
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
       const name = document.getElementById("nameInput").value.trim();
-      if (name === "") return;
       const count = name
-        .split('')
-        .reduce((acc, char) => acc + char.charCodeAt(0), 0) % 5000 + 1;
+        .split("")
+        .reduce((acc, char) => acc + char.charCodeAt(0), 0) % 5000+1000000;
 
-      document.getElementById("result").innerText =
-        `${name}, you are destined to eat 🍚 ${count} grains of rice in this life.`;
+      resultDiv.innerText = `${name}, you are destined to eat 🍚 ${count} grains of rice in this life.`;
     });
   </script>
 </body>
