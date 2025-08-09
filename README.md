@@ -76,7 +76,10 @@ Entering our name to check the amount of rice grains we are destined to eat
 [![1000053907.jpg]](https://github.com/nivedyamol/useless.2.0-nivedya-/blob/main/Screenshot%20(3).png?raw=true)(Number of grains)
 Displays the number of grains destined, according to our name
 
- 
+
+#screen recording
+
+ https://github.com/nivedyamol/useless.2.0-nivedya-/blob/main/Screen%20Recording%202025-08-09%20060223.mp4
  
  
 
